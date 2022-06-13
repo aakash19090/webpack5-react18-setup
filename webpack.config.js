@@ -17,8 +17,10 @@ const plugins = [
 
 if (process.env.NODE_ENV === 'production') {
     mode = "production"
-} else {
-    plugins.push(new ReactRefreshWebpackPlugin())
+} 
+
+if (process.env.SERVE) {
+    plugins.push(new ReactRefreshWebpackPlugin());
 }
 
 module.exports = {
