@@ -2,14 +2,30 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 let mode = "development"
 
-process.env.NODE_ENV === 'production' ? mode = "production" : null;
+const plugins = [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+        template: "./src/index.html",
+        inject: 'body' // To inject Javascript bundle before Body tag in html template
+    }),
+]
+
+if (process.env.NODE_ENV === 'production') {
+    mode = "production"
+} else {
+    plugins.push(new ReactRefreshWebpackPlugin())
+}
 
 module.exports = {
     // mode defaults to 'production' if not set
     mode,
+
+    entry: "./src/index.js",
 
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -78,13 +94,7 @@ module.exports = {
         ]
     },
 
-    plugins: [
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin(),
-        new HtmlWebpackPlugin({
-            template: "./src/index.html",
-            inject: 'body' // To inject Javascript bundle before Body tag in html template
-        })],
+    plugins,
 
     resolve: {
         extensions: [".js", ".jsx"]

@@ -3,7 +3,7 @@ import './styles/index.scss'
 
 function App() {
   return (
-    <div>App</div>
+    <div className='test'>App</div>
   )
 }
 
