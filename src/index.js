@@ -1,15 +1,6 @@
-import './styles/index.scss';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-const person = {
-    name: "Akash",
-    age: "29",
-    profession: "developer"
-}
-
-const person2 = {
-    ...person,
-    email: "test@gmail.com"
-}
-
-console.log(person);
-console.log(person2);
+const root = ReactDOM.createRoot(document.getElementById('root')); // React 18 uses createRoot instead of render
+root.render(<App />);

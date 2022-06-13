@@ -20,7 +20,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
                     // Without additional settings, this will reference .babelrc
@@ -36,4 +36,8 @@ module.exports = {
     },
 
     plugins: [new MiniCssExtractPlugin()],
+
+    resolve: {
+        extensions: [".js", ".jsx"]
+    }
 }
