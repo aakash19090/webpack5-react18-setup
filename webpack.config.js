@@ -5,10 +5,13 @@ let mode = "development"
 process.env.NODE_ENV === 'production' ? mode = "production" : null;
 
 module.exports = {
-
     // mode defaults to 'production' if not set
     mode,
-    
+
+    output: {
+        assetModuleFilename: "images/[hash][ext][query]",
+    },
+
     devServer: {
         static: './dist',
         hot: true,
@@ -21,6 +24,31 @@ module.exports = {
     module: {
         rules: [
             {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 10000,
+                    },
+                },
+            },
+
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: require.resolve('@svgr/webpack'),
+                        options: {
+                            native: true,
+                        },
+                    },
+                    {
+                        loader: require.resolve('file-loader'),
+                    },
+                ],
+            },
+
+            {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
@@ -31,8 +59,18 @@ module.exports = {
 
             {
                 test: /\.(s[ac]|c)ss$/i, // Will support sass,scss,css extensions
-                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
-            }
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { publicPath: "" }
+                    },
+                    "css-loader",
+                    "postcss-loader",
+                    "sass-loader"
+                ]
+            },
+
+
         ]
     },
 
