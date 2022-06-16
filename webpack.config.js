@@ -61,6 +61,10 @@ module.exports = {
 
     devtool: "source-map",
 
+    optimization: {
+        minimize: process.env.NODE_ENV === 'production',
+    }, 
+
     module: {
         rules: [
             {
@@ -125,6 +129,6 @@ module.exports = {
     plugins,
 
     resolve: {
-        extensions: [".js", ".jsx"]
+        extensions: [".js", ".jsx", ".json"],
     }
 }
