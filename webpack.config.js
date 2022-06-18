@@ -3,27 +3,30 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const port = process.env.PORT || '9000';
 
-let mode = "development"
+let mode = 'development';
 
 const plugins = [
-    // instead of CleanWebpackPlugin we are using "clean: true" in output settings to empty output directory before build
-    // new CleanWebpackPlugin(), 
+    /**
+     * Instead of CleanWebpackPlugin we are using "clean: true"
+     * in output settings to empty output directory before build
+     */
+    // new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-        filename: '[name][contenthash:8].css'
+        filename: '[name][contenthash:8].css',
     }),
     new HtmlWebpackPlugin({
-        template: "./src/index.html",
-        inject: 'body' // To inject Javascript bundle before Body tag in html template
+        template: './src/index.html',
+        inject: 'body', // To inject Javascript bundle before Body tag in html template
     }),
-    new BundleAnalyzerPlugin()
-]
+    new BundleAnalyzerPlugin(),
+];
 
 if (process.env.NODE_ENV === 'production') {
-    mode = "production"
+    mode = 'production';
 }
 
 if (process.env.SERVE) {
@@ -37,16 +40,16 @@ module.exports = {
 
     // This is unnecessary in Webpack 5, because it's the default entry point.
     // However, react-refresh-webpack-plugin can't find the entry without it.
-    entry: "./src/index.js",
+    entry: './src/index.js',
 
     output: {
         // output path is required for `clean-webpack-plugin`
         path: path.resolve(__dirname, 'dist'),
         // To prevent caching, we need to add ContentHash to filenames
-        filename: "[name][contenthash:8].js",
+        filename: '[name][contenthash:8].js',
         // this places all images processed in an image folder
-        assetModuleFilename: "images/[hash][ext][query]",
-        // clean can be used to empty output directory before generating build, alternate of `clean-webpack-plugin'
+        assetModuleFilename: 'images/[hash][ext][query]',
+        // For Empty output directory before generating build, alternate of `clean-webpack-plugin'
         clean: true,
     },
 
@@ -56,14 +59,14 @@ module.exports = {
         hot: true,
         open: true,
         historyApiFallback: true,
-        port
+        port,
     },
 
-    devtool: "source-map",
+    devtool: 'source-map',
 
     optimization: {
         minimize: process.env.NODE_ENV === 'production',
-    }, 
+    },
 
     module: {
         rules: [
@@ -73,14 +76,14 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         // This is required for asset imports in CSS, such as url()
-                        options: { publicPath: "" }
+                        options: { publicPath: '' },
                     },
-                    "css-loader",
-                    "postcss-loader",
+                    'css-loader',
+                    'postcss-loader',
                     // according to the docs, sass-loader should be at the bottom, which
                     // loads it first to avoid prefixes in your sourcemaps and other issues.
-                    "sass-loader"
-                ]
+                    'sass-loader',
+                ],
             },
 
             {
@@ -108,8 +111,9 @@ module.exports = {
             {
                 test: /\.svg$/i,
                 /**
-                 * We will handle svgs seperately as we need both options to import SVGs as components and use them
-                 * as well as to use the inline SVGS for which we can use "@svgr/webpack" or "react-svg-loader" plugin
+                 * We will handle svgs seperately as we need both options to import
+                 * SVGs as components and use them as well as to use the inline SVGS
+                 * for which we can use "@svgr/webpack" or "react-svg-loader" plugin
                  */
                 issuer: /\.[jt]sx?$/,
                 use: ['@svgr/webpack'],
@@ -120,15 +124,15 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     // Without additional settings, this will reference .babelrc
-                    loader: "babel-loader"
-                }
+                    loader: 'babel-loader',
+                },
             },
-        ]
+        ],
     },
 
     plugins,
 
     resolve: {
-        extensions: [".js", ".jsx", ".json"],
-    }
-}
+        extensions: ['.js', '.jsx', '.json'],
+    },
+};

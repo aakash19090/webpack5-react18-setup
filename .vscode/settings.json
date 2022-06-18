@@ -1,0 +1,11 @@
+// These settings will only impact this specific project in vscode
+// Reference: https://www.youtube.com/watch?v=sH93pQb9bWM
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.fixAll.format": true
+    }
+}
