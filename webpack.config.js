@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const port = process.env.PORT || '9000';
 
@@ -22,7 +21,6 @@ const plugins = [
         template: './src/index.html',
         inject: 'body', // To inject Javascript bundle before Body tag in html template
     }),
-    new BundleAnalyzerPlugin(),
 ];
 
 if (process.env.NODE_ENV === 'production') {
